@@ -78,10 +78,14 @@ window.addEventListener("popstate", handleRoute);
 // ─── Search view ──────────────────────────────────────────
 function showSearchView() {
   document.title = "Aroma Matches — L'Atelier Digital";
-  const metaDesc = document.querySelector('meta[name="description"]');
-  if (metaDesc) {
-    metaDesc.content = "Trouvez des alternatives abordables aux parfums de luxe. Même sillage, jusqu'à 90% moins cher. Parcourez 1 000+ alternatives.";
-  }
+  setMeta("name",     "description",    "Trouvez des alternatives abordables aux parfums de luxe. Même sillage, jusqu'à 90% moins cher. Parcourez 1 000+ alternatives.");
+  setMeta("property", "og:title",       "Aroma Matches — Trouvez le dupe de votre parfum");
+  setMeta("property", "og:description", "Trouvez des alternatives abordables aux parfums de luxe. Même sillage, jusqu'à 90% moins cher. Parcourez 1 000+ alternatives.");
+  setMeta("property", "og:url",         "https://aromamatches.fr/");
+  setMeta("property", "og:image",       "https://aromamatches.fr/og-image.jpg");
+  setCanonical("https://aromamatches.fr/");
+  removeJsonLd("ld-breadcrumb");
+  removeJsonLd("ld-product");
 
   // Restore mobile nav
   if (navLeft) {
@@ -392,12 +396,36 @@ function renderDetail(perfume) {
   const brandName = perfume.brand?.name || "";
   const sexLabel  = { M: "Homme", F: "Femme", U: "Mixte" }[perfume.sex] || null;
 
-  // SEO: dynamic title + meta description
-  document.title = `Alternatives ${perfume.name} ${brandName} — Aroma Matches`.trim();
-  const metaDesc = document.querySelector('meta[name="description"]');
-  if (metaDesc) {
-    metaDesc.content = `Trouvez des dupes et alternatives abordables pour ${perfume.name} de ${brandName}. Même sillage, jusqu'à 90% moins cher.`;
-  }
+  // SEO: dynamic title + meta + OG + canonical
+  const pageTitle = `Alternatives ${perfume.name} ${brandName} — Aroma Matches`.trim();
+  const pageDesc  = `Trouvez des dupes et alternatives abordables pour ${perfume.name} de ${brandName}. Même sillage, jusqu'à 90% moins cher.`;
+  const pageUrl   = `https://aromamatches.fr${window.location.pathname}`;
+  const pageImg   = perfume.image_url || "https://aromamatches.fr/og-image.jpg";
+
+  document.title = pageTitle;
+  setMeta("name",     "description",        pageDesc);
+  setMeta("property", "og:title",           pageTitle);
+  setMeta("property", "og:description",     pageDesc);
+  setMeta("property", "og:url",             pageUrl);
+  setMeta("property", "og:image",           pageImg);
+  setMeta("property", "og:type",            "website");
+  setMeta("name",     "twitter:title",      pageTitle);
+  setMeta("name",     "twitter:description",pageDesc);
+  setMeta("name",     "twitter:image",      pageImg);
+  setCanonical(pageUrl);
+
+  // JSON-LD: BreadcrumbList
+  setJsonLd("ld-breadcrumb", {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://aromamatches.fr" },
+      { "@type": "ListItem", "position": 2, "name": `${perfume.name} — ${brandName}`, "item": pageUrl }
+    ]
+  });
+
+  // JSON-LD: Product (injected after dupes are known — see renderDetail)
+  // Built below after dupes are computed
 
   const dupes = perfume.dupe_mapping
     .map(m => m.dupe_product)
@@ -412,6 +440,25 @@ function renderDetail(perfume) {
     });
 
   const count = dupes.length;
+
+  // JSON-LD: Product schema
+  setJsonLd("ld-product", {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": `${perfume.name} — ${brandName}`,
+    "image": perfume.image_url || undefined,
+    "description": `Alternatives et dupes abordables pour ${perfume.name} de ${brandName}. Même sillage, jusqu'à 90% moins cher.`,
+    "brand": { "@type": "Brand", "name": brandName },
+    "offers": dupes.filter(d => d.price != null && d.link).map(d => ({
+      "@type": "Offer",
+      "name": d.name,
+      "price": d.price.toFixed(2),
+      "priceCurrency": d.currency || "EUR",
+      "url": d.link,
+      "availability": "https://schema.org/InStock",
+      "seller": { "@type": "Organization", "name": d.dupe_brand?.name || "" }
+    }))
+  });
 
   // Results page header
   viewHeader.innerHTML = `
@@ -687,6 +734,43 @@ function bindSearch() {
       closeAutocomplete();
     }
   }, { capture: true });
+}
+
+// ─── SEO helpers ──────────────────────────────────────────
+function setMeta(attr, key, value) {
+  let el = document.querySelector(`meta[${attr}="${key}"]`);
+  if (!el) {
+    el = document.createElement("meta");
+    el.setAttribute(attr, key);
+    document.head.appendChild(el);
+  }
+  el.setAttribute("content", value);
+}
+
+function setCanonical(url) {
+  let el = document.querySelector('link[rel="canonical"]');
+  if (!el) {
+    el = document.createElement("link");
+    el.setAttribute("rel", "canonical");
+    document.head.appendChild(el);
+  }
+  el.setAttribute("href", url);
+}
+
+function setJsonLd(id, data) {
+  let el = document.getElementById(id);
+  if (!el) {
+    el = document.createElement("script");
+    el.type = "application/ld+json";
+    el.id = id;
+    document.head.appendChild(el);
+  }
+  el.textContent = JSON.stringify(data);
+}
+
+function removeJsonLd(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
 }
 
 // ─── Helpers ──────────────────────────────────────────────
