@@ -152,12 +152,12 @@ export default function SearchBar() {
         )}
       </div>
 
-      <div className="hero-suggestions">
+      {!showList && <div className="hero-suggestions">
         <span className="suggestion-label">Suggestions :</span>
         <button className="suggestion-pill" onClick={() => setSuggestion('Baccarat Rouge')}>Baccarat Rouge</button>
         <button className="suggestion-pill" onClick={() => setSuggestion('Aventus')}>Aventus</button>
         <button className="suggestion-pill" onClick={() => setSuggestion('Sauvage')}>Sauvage</button>
-      </div>
+      </div>}
     </>
   )
 }
