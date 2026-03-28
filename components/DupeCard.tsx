@@ -1,5 +1,6 @@
 import { formatPrice, getScore, getAccordSegments } from '@/lib/utils'
 import type { DupeProduct } from '@/lib/types'
+import { t } from '@/lib/i18n'
 
 interface Props {
   dupe: DupeProduct
@@ -10,8 +11,9 @@ export default function DupeCard({ dupe, index }: Props) {
   const score = getScore(index)
   const segs  = getAccordSegments(index)
   const priceStr = dupe.price != null
-    ? `${formatPrice(dupe.price)}\u202f${dupe.currency || 'EUR'}`
+    ? `${formatPrice(dupe.price, t.priceLocale)}\u202f${dupe.currency || 'EUR'}`
     : null
+  const link = dupe.link?.replace('divainparfums.fr', t.divainDomain) ?? null
 
   return (
     <article
@@ -38,21 +40,21 @@ export default function DupeCard({ dupe, index }: Props) {
           </div>
           <div className="accord-legend">
             <span className="accord-legend-item">
-              <span className="legend-dot legend-dot--1"></span> Boisé
+              <span className="legend-dot legend-dot--1"></span> {t.woody}
             </span>
             <span className="accord-legend-item">
-              <span className="legend-dot legend-dot--2"></span> Floral
+              <span className="legend-dot legend-dot--2"></span> {t.floral}
             </span>
             <span className="accord-legend-item">
-              <span className="legend-dot legend-dot--3"></span> Musqué
+              <span className="legend-dot legend-dot--3"></span> {t.musky}
             </span>
           </div>
         </div>
         <div className="match-footer">
           <span className="match-price">{priceStr || '—'}</span>
-          {dupe.link
-            ? <a className="match-details-btn" href={dupe.link} target="_blank" rel="noopener noreferrer">See Details</a>
-            : <span className="match-unavailable">Indisponible</span>
+          {link
+            ? <a className="match-details-btn" href={link} target="_blank" rel="noopener noreferrer">See Details</a>
+            : <span className="match-unavailable">{t.unavailable}</span>
           }
         </div>
       </div>

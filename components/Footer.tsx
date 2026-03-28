@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { t } from '@/lib/i18n'
 
 export default function Footer() {
   return (
@@ -8,10 +9,7 @@ export default function Footer() {
 
           <div className="footer-col">
             <span className="footer-brand">Aroma Matches</span>
-            <p className="footer-tagline">
-              L&apos;art de la découverte olfactive sublimé par la technologie.
-              Trouvez votre signature, explorez les alternatives.
-            </p>
+            <p className="footer-tagline">{t.footerTagline}</p>
             <div className="footer-socials">
               <a href="#" className="footer-social-link" aria-label="Site web">
                 <span className="material-symbols-outlined">public</span>
@@ -26,36 +24,34 @@ export default function Footer() {
             <h5 className="footer-col-title">Navigation</h5>
             <ul className="footer-links">
               <li><a href="#">Scent Journal</a></li>
-              <li><a href="#">Découvrir</a></li>
-              <li><a href="#">À propos</a></li>
-              <li><a href="#">Contact</a></li>
+              <li><a href="#">{t.footerDiscover}</a></li>
+              <li><a href="#">{t.footerAbout}</a></li>
+              <li><a href="#">{t.footerContact}</a></li>
             </ul>
           </div>
 
           <div className="footer-col">
             <h5 className="footer-col-title">Informations</h5>
             <ul className="footer-links">
-              <li><Link href="/mentions-legales">Mentions légales</Link></li>
-              <li><a href="#">Politique de confidentialité</a></li>
-              <li><a href="#">Conditions d&apos;utilisation</a></li>
-              <li><a href="#">Cookies</a></li>
-              <li><a href="#">Accessibilité</a></li>
+              <li><Link href="/mentions-legales">{t.footerLegalNotice}</Link></li>
+              <li><a href="#">{t.footerPrivacy}</a></li>
+              <li><a href="#">{t.footerTerms}</a></li>
+              <li><a href="#">{t.footerCookies}</a></li>
+              <li><a href="#">{t.footerAccessibility}</a></li>
             </ul>
           </div>
 
           <div className="footer-col">
             <h5 className="footer-col-title">Newsletter</h5>
-            <p className="footer-newsletter-desc">
-              Inscrivez-vous pour recevoir nos curations hebdomadaires.
-            </p>
+            <p className="footer-newsletter-desc">{t.newsletterDesc}</p>
             <div className="footer-newsletter-form">
               <input
                 className="footer-newsletter-input"
                 type="email"
-                placeholder="votre@email.com"
-                aria-label="Adresse email"
+                placeholder={t.emailPlaceholder}
+                aria-label={t.emailAriaLabel}
               />
-              <button className="footer-newsletter-btn" aria-label="S'inscrire">
+              <button className="footer-newsletter-btn" aria-label={t.subscribeAriaLabel}>
                 <span className="material-symbols-outlined">arrow_forward</span>
               </button>
             </div>

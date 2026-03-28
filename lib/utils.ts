@@ -13,8 +13,8 @@ export function normalize(str: string): string {
   return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 }
 
-export function formatPrice(n: number): string {
-  return Number(n).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+export function formatPrice(n: number, priceLocale = 'fr-FR'): string {
+  return Number(n).toLocaleString(priceLocale, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 }
 
 export function getScore(i: number): number {

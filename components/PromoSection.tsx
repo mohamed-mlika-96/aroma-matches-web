@@ -1,3 +1,5 @@
+import { t } from '@/lib/i18n'
+
 export default function PromoSection() {
   return (
     <section className="promo-section">
@@ -5,14 +7,11 @@ export default function PromoSection() {
         <span className="material-symbols-outlined">spa</span>
       </div>
       <div className="promo-inner">
-        <h2 className="promo-title">Aidez-nous à grandir</h2>
-        <p className="promo-text">
-          Notre bibliothèque s&apos;enrichit grâce à votre expertise. Vous avez découvert une alternative bluffante ?
-          Partagez-la avec la communauté et devenez un contributeur de l&apos;Atelier Aroma Matches.
-        </p>
+        <h2 className="promo-title">{t.promoTitle}</h2>
+        <p className="promo-text">{t.promoText}</p>
         <div className="promo-btns">
-          <button className="btn-gold">Soumettre un dupe</button>
-          <button className="btn-outline">En savoir plus</button>
+          <button className="btn-gold">{t.submitDupe}</button>
+          <button className="btn-outline">{t.learnMore}</button>
         </div>
       </div>
     </section>

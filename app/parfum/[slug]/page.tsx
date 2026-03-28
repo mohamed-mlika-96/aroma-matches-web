@@ -5,6 +5,7 @@ import { getAllPerfumes, getPerfumeBySlug } from '@/lib/data'
 import { toSlug } from '@/lib/utils'
 import DupeCard from '@/components/DupeCard'
 import type { DupeProduct } from '@/lib/types'
+import { t, LOCALE } from '@/lib/i18n'
 
 export const revalidate = 86400 // Re-génère les pages toutes les 24h
 
@@ -24,9 +25,11 @@ export async function generateMetadata(
 
   const brandName = perfume.brand?.name || ''
   const title = `Alternatives ${perfume.name} ${brandName}`.trim()
-  const description = `Trouvez des dupes et alternatives abordables pour ${perfume.name} de ${brandName}. Même sillage, jusqu'à 90% moins cher.`
-  const url = `https://aromamatches.fr/parfum/${slug}`
-  const image = perfume.image_url || 'https://aromamatches.fr/og-image.jpg'
+  const description = LOCALE === 'en'
+    ? `Find affordable dupes and alternatives for ${perfume.name} by ${brandName}. Same scent, up to 90% cheaper.`
+    : `Trouvez des dupes et alternatives abordables pour ${perfume.name} de ${brandName}. Même sillage, jusqu'à 90% moins cher.`
+  const url = `${t.siteUrl}/parfum/${slug}`
+  const image = perfume.image_url || `${t.siteUrl}/og-image.jpg`
 
   return {
     title,
@@ -37,7 +40,6 @@ export async function generateMetadata(
   }
 }
 
-const SEX_LABEL: Record<string, string> = { M: 'Homme', F: 'Femme', U: 'Mixte' }
 
 export default async function PerfumePage(
   { params }: { params: Promise<{ slug: string }> }
@@ -47,7 +49,7 @@ export default async function PerfumePage(
   if (!perfume) notFound()
 
   const brandName = perfume.brand?.name || ''
-  const pageUrl   = `https://aromamatches.fr/parfum/${slug}`
+  const pageUrl   = `${t.siteUrl}/parfum/${slug}`
 
   const dupes: DupeProduct[] = perfume.dupe_mapping
     .map(m => m.dupe_product)
@@ -72,7 +74,7 @@ export default async function PerfumePage(
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Accueil', item: 'https://aromamatches.fr' },
+      { '@type': 'ListItem', position: 1, name: t.breadcrumbHome, item: t.siteUrl },
       { '@type': 'ListItem', position: 2, name: `${perfume.name} — ${brandName}`, item: pageUrl },
     ],
   }
@@ -82,7 +84,9 @@ export default async function PerfumePage(
     '@type': 'Product',
     name: `${perfume.name} — ${brandName}`,
     ...(perfume.image_url && { image: perfume.image_url }),
-    description: `Alternatives et dupes abordables pour ${perfume.name} de ${brandName}. Même sillage, jusqu'à 90% moins cher.`,
+    description: LOCALE === 'en'
+      ? `Affordable alternatives and dupes for ${perfume.name} by ${brandName}. Same scent, up to 90% cheaper.`
+      : `Alternatives et dupes abordables pour ${perfume.name} de ${brandName}. Même sillage, jusqu'à 90% moins cher.`,
     brand: { '@type': 'Brand', name: brandName },
     offers: dupes
       .filter(d => d.price != null && d.link)
@@ -107,12 +111,10 @@ export default async function PerfumePage(
         <div className="results-page-header">
           <div className="section-container">
             <Link href="/" className="back-link">
-              <span className="material-symbols-outlined">arrow_back</span> Retour
+              <span className="material-symbols-outlined">arrow_back</span> {t.back}
             </Link>
-            <h1 className="results-title">Résultats : {perfume.name}</h1>
-            <p className="results-subtitle">
-              {count} correspondance{count !== 1 ? 's' : ''} trouvée{count !== 1 ? 's' : ''} dans notre Atelier Digital
-            </p>
+            <h1 className="results-title">{t.resultsLabel} {perfume.name}</h1>
+            <p className="results-subtitle">{t.matchFound(count)}</p>
           </div>
         </div>
       </div>
@@ -136,12 +138,10 @@ export default async function PerfumePage(
                 <div className="original-meta">
                   <h2 className="original-name">{perfume.name}</h2>
                   <p className="original-brand">{brandName}</p>
-                  <p className="original-quote">
-                    &ldquo;Une fragrance iconique qui a redéfini les codes de la parfumerie contemporaine.&rdquo;
-                  </p>
+                  <p className="original-quote">&ldquo;{t.iconicQuote}&rdquo;</p>
                   <div className="original-pills">
-                    {perfume.sex && <span className="note-pill">{SEX_LABEL[perfume.sex] || ''}</span>}
-                    <span className="note-pill">Luxe</span>
+                    {perfume.sex && <span className="note-pill">{t.sexLabel[perfume.sex] || ''}</span>}
+                    <span className="note-pill">{t.luxe}</span>
                     <span className="note-pill">Signature</span>
                   </div>
                   {shopLink
@@ -161,7 +161,7 @@ export default async function PerfumePage(
               {count === 0 ? (
                 <div className="state-msg" style={{ minHeight: '320px' }}>
                   <span className="state-icon">◈</span>
-                  <span>Aucune correspondance pour le moment. Revenez bientôt !</span>
+                  <span>{t.noMatch}</span>
                 </div>
               ) : (
                 <div className="matches-grid">

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { toSlug } from '@/lib/utils'
 import type { Perfume } from '@/lib/types'
+import { t } from '@/lib/i18n'
 
 const BADGE_SCORES = ['94%', '92%', '89%', '96%']
 
@@ -10,12 +11,10 @@ export default function TrendingSection({ perfumes }: { perfumes: Perfume[] }) {
       <div className="section-container">
         <div className="trending-header">
           <div>
-            <h2 className="trending-title">Tendances du moment</h2>
-            <p className="trending-desc">
-              Découvrez les correspondances les plus populaires de notre communauté d&apos;experts et passionnés.
-            </p>
+            <h2 className="trending-title">{t.trendingTitle}</h2>
+            <p className="trending-desc">{t.trendingDesc}</p>
           </div>
-          <button className="trending-all-btn">Voir tout le catalogue</button>
+          <button className="trending-all-btn">{t.trendingAllBtn}</button>
         </div>
 
         <div className="trending-grid">
@@ -35,13 +34,13 @@ export default function TrendingSection({ perfumes }: { perfumes: Perfume[] }) {
                 <div className="trend-badge">{BADGE_SCORES[i]} Match</div>
               </div>
               <div className="trend-body">
-                <p className="trend-label">Alternatives inspirées par</p>
+                <p className="trend-label">{t.altInspiredBy}</p>
                 <h3 className="trend-name">{p.name}</h3>
                 <p className="trend-brand">{p.brand?.name || ''}</p>
                 <div className="trend-divider"></div>
-                <p className="trend-alt-label">L&apos;Alternative</p>
-                <p className="trend-alt-name">Voir les alternatives →</p>
-                <span className="trend-btn">Découvrir l&apos;accord</span>
+                <p className="trend-alt-label">{t.theAlternative}</p>
+                <p className="trend-alt-name">{t.seeAlternatives}</p>
+                <span className="trend-btn">{t.discoverAccord}</span>
               </div>
             </Link>
           ))}

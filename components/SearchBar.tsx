@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { getBrowserClient } from '@/lib/supabase-browser'
 import { toSlug, normalize } from '@/lib/utils'
 import type { Perfume } from '@/lib/types'
+import { t } from '@/lib/i18n'
 
 const SEX_SYMBOL: Record<string, string> = { M: '♂', F: '♀', U: '⚲' }
 
@@ -100,12 +101,12 @@ export default function SearchBar() {
           type="search"
           id="search"
           className="hero-search-input"
-          placeholder="Entrez le nom d'un parfum de luxe..."
+          placeholder={t.searchPlaceholder}
           autoComplete="off"
           spellCheck={false}
           aria-autocomplete="list"
           aria-controls="ac-list"
-          aria-label="Rechercher un parfum"
+          aria-label={t.searchAriaLabel}
           value={query}
           onChange={handleInput}
           onKeyDown={handleKeyDown}
@@ -124,7 +125,7 @@ export default function SearchBar() {
           className="hero-search-btn"
           onClick={() => { if (matches.length > 0) navigateTo(matches[0]) }}
         >
-          Trouver <span className="material-symbols-outlined">arrow_forward</span>
+          {t.searchBtn} <span className="material-symbols-outlined">arrow_forward</span>
         </button>
 
         {showList && matches.length > 0 && (
@@ -153,7 +154,7 @@ export default function SearchBar() {
       </div>
 
       {!showList && <div className="hero-suggestions">
-        <span className="suggestion-label">Suggestions :</span>
+        <span className="suggestion-label">{t.suggestionsLabel}</span>
         <button className="suggestion-pill" onClick={() => setSuggestion('Baccarat Rouge')}>Baccarat Rouge</button>
         <button className="suggestion-pill" onClick={() => setSuggestion('Aventus')}>Aventus</button>
         <button className="suggestion-pill" onClick={() => setSuggestion('Sauvage')}>Sauvage</button>

@@ -2,18 +2,19 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
+import { t, LOCALE } from '@/lib/i18n'
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://aromamatches.fr'),
+  metadataBase: new URL(t.siteUrl),
   title: {
-    default: 'Aroma Matches — Trouvez le dupe de votre parfum de luxe',
+    default: t.siteTitle,
     template: '%s — Aroma Matches',
   },
-  description: "Trouvez des alternatives abordables aux parfums de luxe. Même sillage, jusqu'à 90% moins cher. Parcourez 1 000+ alternatives.",
+  description: t.siteDescription,
   openGraph: {
     type: 'website',
     siteName: 'Aroma Matches',
-    locale: 'fr_FR',
+    locale: t.ogLocale,
     images: [{ url: '/og-image.jpg' }],
   },
   twitter: { card: 'summary_large_image' },
@@ -25,14 +26,14 @@ const SITE_JSONLD = [
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'Aroma Matches',
-    url: 'https://aromamatches.fr',
-    description: "Trouvez des alternatives abordables aux parfums de luxe. Même sillage, jusqu'à 90% moins cher.",
-    inLanguage: 'fr-FR',
+    url: t.siteUrl,
+    description: t.schemaDescription,
+    inLanguage: LOCALE === 'en' ? 'en-US' : 'fr-FR',
     potentialAction: {
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: 'https://aromamatches.fr/?q={search_term_string}',
+        urlTemplate: `${t.siteUrl}/?q={search_term_string}`,
       },
       'query-input': 'required name=search_term_string',
     },
@@ -41,20 +42,20 @@ const SITE_JSONLD = [
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Aroma Matches',
-    url: 'https://aromamatches.fr',
-    logo: 'https://aromamatches.fr/logo.png',
+    url: t.siteUrl,
+    logo: `${t.siteUrl}/logo.png`,
     contactPoint: {
       '@type': 'ContactPoint',
       email: 'aroma.matches31@gmail.com',
       contactType: 'customer service',
-      availableLanguage: 'French',
+      availableLanguage: t.availableLanguage,
     },
   },
 ]
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr">
+    <html lang={t.htmlLang}>
       <head>
         <meta name="theme-color" content="#012d1d" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />

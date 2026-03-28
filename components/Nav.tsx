@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
+import { t } from '@/lib/i18n'
 
 export default function Nav() {
   const pathname = usePathname()
@@ -20,7 +21,7 @@ export default function Nav() {
     <nav id="site-nav">
       <button
         className="nav-icon-btn nav-mobile-only"
-        aria-label={isDetail ? 'Retour' : 'Menu'}
+        aria-label={isDetail ? t.backAriaLabel : 'Menu'}
         onClick={() => isDetail && router.push('/')}
       >
         <span className="material-symbols-outlined">
@@ -52,19 +53,19 @@ export default function Nav() {
         {!isDetail && (
           <div className="nav-search-pill nav-desktop-only" onClick={focusSearch}>
             <span className="material-symbols-outlined">search</span>
-            <span className="nav-search-hint">Rechercher une fragrance...</span>
+            <span className="nav-search-hint">{t.searchHint}</span>
           </div>
         )}
         <div className="nav-icons">
           {!isDetail && (
-            <button className="nav-icon-btn" aria-label="Rechercher" onClick={focusSearch}>
+            <button className="nav-icon-btn" aria-label={t.searchIconAriaLabel} onClick={focusSearch}>
               <span className="material-symbols-outlined">search</span>
             </button>
           )}
-          <button className="nav-icon-btn nav-desktop-only" aria-label="Panier">
+          <button className="nav-icon-btn nav-desktop-only" aria-label={t.cartAriaLabel}>
             <span className="material-symbols-outlined">shopping_bag</span>
           </button>
-          <button className="nav-icon-btn nav-desktop-only" aria-label="Profil">
+          <button className="nav-icon-btn nav-desktop-only" aria-label={t.profileAriaLabel}>
             <span className="material-symbols-outlined">person</span>
           </button>
         </div>

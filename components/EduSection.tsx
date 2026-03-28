@@ -1,48 +1,41 @@
+import { t } from '@/lib/i18n'
+
 export default function EduSection() {
   return (
     <section className="edu-section">
       <div className="section-container edu-grid">
         <div className="edu-text">
-          <span className="edu-label">L&apos;Art de la Parfumerie</span>
-          <h2 className="edu-title">Comprendre la pyramide olfactive</h2>
+          <span className="edu-label">{t.eduLabel}</span>
+          <h2 className="edu-title">{t.eduTitle}</h2>
           <div className="edu-steps">
             <div className="edu-step">
               <div className="edu-step-num edu-step-num--1">1</div>
               <div>
-                <h4 className="edu-step-title">Notes de Tête</h4>
-                <p className="edu-step-desc">
-                  L&apos;envolée du parfum. Ce sont les senteurs volatiles que l&apos;on perçoit immédiatement :
-                  agrumes, herbes aromatiques, notes aquatiques.
-                </p>
+                <h4 className="edu-step-title">{t.note1Title}</h4>
+                <p className="edu-step-desc">{t.note1Desc}</p>
               </div>
             </div>
             <div className="edu-step">
               <div className="edu-step-num edu-step-num--2">2</div>
               <div>
-                <h4 className="edu-step-title">Notes de Cœur</h4>
-                <p className="edu-step-desc">
-                  Le caractère du parfum. Elles se développent après quelques minutes et constituent la
-                  signature olfactive : floral, fruité ou épicé.
-                </p>
+                <h4 className="edu-step-title">{t.note2Title}</h4>
+                <p className="edu-step-desc">{t.note2Desc}</p>
               </div>
             </div>
             <div className="edu-step">
               <div className="edu-step-num edu-step-num--3">3</div>
               <div>
-                <h4 className="edu-step-title">Notes de Fond</h4>
-                <p className="edu-step-desc">
-                  Le sillage. Elles assurent la tenue du parfum pendant plusieurs heures :
-                  bois précieux, muscs, ambre, vanille.
-                </p>
+                <h4 className="edu-step-title">{t.note3Title}</h4>
+                <p className="edu-step-desc">{t.note3Desc}</p>
               </div>
             </div>
           </div>
           <div className="note-pills">
-            <span className="note-pill">Boisé</span>
-            <span className="note-pill">Floral</span>
-            <span className="note-pill">Musqué</span>
-            <span className="note-pill">Ambré</span>
-            <span className="note-pill">Hespéridé</span>
+            <span className="note-pill">{t.pill1}</span>
+            <span className="note-pill">{t.pill2}</span>
+            <span className="note-pill">{t.pill3}</span>
+            <span className="note-pill">{t.pill4}</span>
+            <span className="note-pill">{t.pill5}</span>
           </div>
         </div>
 
@@ -52,12 +45,12 @@ export default function EduSection() {
             <img
               src="https://images.unsplash.com/photo-1608181831718-e2a6a399e8f1?w=800&q=85"
               className="edu-img"
-              alt="Ingrédients botaniques"
+              alt={t.eduImgAlt}
               loading="lazy"
             />
             <div className="edu-img-overlay"></div>
             <div className="edu-quote">
-              <p className="edu-quote-text">&ldquo;Le parfum est le frère de la respiration.&rdquo;</p>
+              <p className="edu-quote-text">&ldquo;{t.quote}&rdquo;</p>
               <p className="edu-quote-author">— Yves Saint Laurent</p>
             </div>
           </div>
