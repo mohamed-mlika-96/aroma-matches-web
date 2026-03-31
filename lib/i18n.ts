@@ -90,6 +90,13 @@ interface Translations {
   floral: string
   musky: string
 
+  // Blog
+  blogLabel: string
+  blogTitle: string
+  blogDescription: string
+  blogEmpty: string
+  blogReadMore: string
+
   // Data
   priceLocale: string
   divainDomain: string
@@ -174,6 +181,12 @@ const FR: Translations = {
   floral: 'Floral',
   musky: 'Musqué',
 
+  blogLabel: 'Le Magazine',
+  blogTitle: 'Conseils & Inspirations',
+  blogDescription: 'Guides olfactifs, tendances parfumerie et conseils pour trouver votre signature.',
+  blogEmpty: 'Aucun article pour le moment. Revenez bientôt !',
+  blogReadMore: 'Lire l\'article →',
+
   priceLocale: 'fr-FR',
   divainDomain: 'divainparfums.fr',
 }
@@ -256,6 +269,12 @@ const EN: Translations = {
   woody: 'Woody',
   floral: 'Floral',
   musky: 'Musky',
+
+  blogLabel: 'The Magazine',
+  blogTitle: 'Tips & Inspirations',
+  blogDescription: 'Fragrance guides, perfumery trends and tips to find your signature scent.',
+  blogEmpty: 'No articles yet. Check back soon!',
+  blogReadMore: 'Read article →',
 
   priceLocale: 'en-US',
   divainDomain: 'divainparfums.com',

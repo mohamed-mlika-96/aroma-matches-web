@@ -38,14 +38,18 @@ export default function Nav() {
         <div className="nav-links nav-desktop-only">
           <Link
             className={`nav-link${pathname === '/' ? ' nav-link--active' : ''}`}
-            data-page="discover"
             href="/"
           >
-            Discover
+            {t.footerDiscover}
           </Link>
-          <a className="nav-link" href="#">Shop</a>
-          <a className="nav-link" href="#">About</a>
-          <a className="nav-link" href="#">Contact</a>
+          <Link
+            className={`nav-link${pathname.startsWith('/blog') ? ' nav-link--active' : ''}`}
+            href="/blog"
+          >
+            Blog
+          </Link>
+          <a className="nav-link" href="#">{t.footerAbout}</a>
+          <a className="nav-link" href="#">{t.footerContact}</a>
         </div>
       </div>
 
