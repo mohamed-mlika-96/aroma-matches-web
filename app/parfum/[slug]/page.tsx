@@ -67,8 +67,12 @@ export default async function PerfumePage(
       return 0
     })
 
-  const count    = dupes.length
-  const shopLink = dupes.find(d => d.link)?.link
+  const count        = dupes.length
+  const shopLink     = perfume.price_url || dupes.find(d => d.link)?.link
+  const cheapestDupe = dupes.find(d => d.price != null)
+  const savings      = perfume.price && cheapestDupe?.price
+    ? Math.round((1 - cheapestDupe.price / perfume.price) * 100)
+    : null
 
   const breadcrumbLd = {
     '@context': 'https://schema.org',
@@ -144,6 +148,16 @@ export default async function PerfumePage(
                     <span className="note-pill">{t.luxe}</span>
                     <span className="note-pill">Signature</span>
                   </div>
+                  {perfume.price != null && (
+                    <div className="original-price">
+                      <span className="original-price-amount">
+                        {Number(perfume.price).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}&thinsp;{perfume.price_currency || 'EUR'}
+                      </span>
+                      {savings != null && savings > 0 && (
+                        <span className="original-price-savings">Économisez jusqu&apos;à {savings}%</span>
+                      )}
+                    </div>
+                  )}
                   {shopLink
                     ? <a className="original-shop-btn" href={shopLink} target="_blank" rel="noopener noreferrer">
                         Shop Original <span className="material-symbols-outlined">open_in_new</span>

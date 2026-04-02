@@ -26,6 +26,9 @@ export interface Perfume {
 }
 
 export interface PerfumeDetail extends Perfume {
+  price: number | null
+  price_currency: string | null
+  price_url: string | null
   dupe_mapping: Array<{
     dupe_product: DupeProduct | null
   }>

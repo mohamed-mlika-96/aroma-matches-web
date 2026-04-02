@@ -1089,6 +1089,28 @@ ul   { list-style: none; }
 .original-shop-btn:hover { background: var(--primary-container); box-shadow: 0 6px 24px rgba(1,45,29,.25); }
 .original-shop-btn:disabled { background: var(--surface-container-high); color: var(--outline); box-shadow: none; cursor: default; }
 
+.original-price {
+  display: flex;
+  align-items: baseline;
+  gap: .75rem;
+  margin: .75rem 0 .25rem;
+}
+.original-price-amount {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--on-surface);
+  letter-spacing: -.02em;
+}
+.original-price-savings {
+  font-size: .75rem;
+  font-weight: 600;
+  color: #2e7d32;
+  background: #e8f5e9;
+  border-radius: 20px;
+  padding: .2rem .6rem;
+  white-space: nowrap;
+}
+
 /* Match cards grid */
 .matches-grid {
   display: grid;

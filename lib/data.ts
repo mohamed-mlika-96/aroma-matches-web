@@ -35,7 +35,7 @@ export const getPerfumeBySlug = cache(async (slug: string): Promise<PerfumeDetai
   const { data, error } = await supabase
     .from('original_perfume')
     .select(`
-      id, name, sex, image_url,
+      id, name, sex, image_url, price, price_currency, price_url,
       brand:brand_id(name),
       dupe_mapping(
         dupe_product:dupe_product_id(
