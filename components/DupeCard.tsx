@@ -1,4 +1,5 @@
 import { formatPrice, getScore } from '@/lib/utils'
+import { getNoteEmoji } from '@/lib/noteEmoji'
 import type { DupeProduct } from '@/lib/types'
 import { t } from '@/lib/i18n'
 
@@ -100,6 +101,7 @@ function DupeNotesRow({
               key={n}
               className={`dupe-note dupe-note--${tier}${shared ? ' dupe-note--shared' : ''}`}
             >
+              <span className="note-emoji" aria-hidden="true">{getNoteEmoji(n)}</span>
               {n}
             </span>
           )

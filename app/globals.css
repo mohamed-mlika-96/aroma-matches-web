@@ -1644,6 +1644,14 @@ ul   { list-style: none; }
   border-radius: var(--r-pill);
   line-height: 1;
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+}
+.note-emoji {
+  font-size: .875rem;
+  line-height: 1;
+  flex-shrink: 0;
 }
 .pyramid-note--top    { background: rgba(124,87,21,.09); color: var(--secondary); border: 1px solid rgba(124,87,21,.18); }
 .pyramid-note--middle { background: rgba(64,27,27,.07);  color: var(--tertiary);  border: 1px solid rgba(64,27,27,.15); }
@@ -1724,6 +1732,9 @@ ul   { list-style: none; }
   background: var(--surface-container);
   color: var(--on-surface-variant);
   border: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
 }
 .dupe-note--shared {
   background: rgba(124,87,21,.10);

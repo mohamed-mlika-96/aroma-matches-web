@@ -1,3 +1,5 @@
+import { getNoteEmoji } from '@/lib/noteEmoji'
+
 interface Props {
   notesTop:    string[] | null
   notesMiddle: string[] | null
@@ -53,7 +55,10 @@ function PyramidLayer({
       </div>
       <div className="pyramid-notes-wrap">
         {notes.map(n => (
-          <span key={n} className={`pyramid-note pyramid-note--${tier}`}>{n}</span>
+          <span key={n} className={`pyramid-note pyramid-note--${tier}`}>
+            <span className="note-emoji" aria-hidden="true">{getNoteEmoji(n)}</span>
+            {n}
+          </span>
         ))}
       </div>
     </div>
