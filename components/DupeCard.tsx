@@ -1,19 +1,28 @@
-import { formatPrice, getScore, getAccordSegments } from '@/lib/utils'
+import { formatPrice, getScore } from '@/lib/utils'
 import type { DupeProduct } from '@/lib/types'
 import { t } from '@/lib/i18n'
 
 interface Props {
   dupe: DupeProduct
   index: number
+  origNoteSet?: Set<string>
 }
 
-export default function DupeCard({ dupe, index }: Props) {
-  const score = getScore(index)
-  const segs  = getAccordSegments(index)
+export default function DupeCard({ dupe, index, origNoteSet = new Set() }: Props) {
+  const score    = getScore(index)
   const priceStr = dupe.price != null
     ? `${formatPrice(dupe.price, t.priceLocale)}\u202f${dupe.currency || 'EUR'}`
     : null
   const link = dupe.link?.replace('divainparfums.fr', t.divainDomain) ?? null
+
+  const hasNotes   = dupe.notes_top?.length || dupe.notes_middle?.length || dupe.notes_base?.length
+  const hasAccords = dupe.accords?.length
+  const hasData    = hasNotes || hasAccords
+
+  const sharedCount = hasNotes
+    ? [...(dupe.notes_top || []), ...(dupe.notes_middle || []), ...(dupe.notes_base || [])]
+        .filter(n => origNoteSet.has(n.toLowerCase())).length
+    : 0
 
   return (
     <article
@@ -31,25 +40,34 @@ export default function DupeCard({ dupe, index }: Props) {
       <div className="match-body">
         <p className="match-brand-label">{dupe.dupe_brand?.name || ''}</p>
         <h3 className="match-name">{dupe.name}</h3>
-        <div className="accord-wrap">
-          <span className="accord-label">Accord Balance</span>
-          <div className="accord-bar">
-            <div className="accord-seg accord-seg--1" style={{ width: `${segs[0]}%` }}></div>
-            <div className="accord-seg accord-seg--2" style={{ width: `${segs[1]}%` }}></div>
-            <div className="accord-seg accord-seg--3" style={{ width: `${segs[2]}%` }}></div>
+
+        {hasData && (
+          <div className="dupe-notes-section">
+            <div className="dupe-notes-header">
+              <span className="accord-label">Notes du dupe</span>
+              {sharedCount > 0 && (
+                <span className="dupe-shared-legend">
+                  ★ {sharedCount} note{sharedCount > 1 ? 's' : ''} en commun
+                </span>
+              )}
+            </div>
+            {hasNotes && (
+              <div className="dupe-notes-rows">
+                <DupeNotesRow icon="↑" notes={dupe.notes_top}    tier="top"    origNoteSet={origNoteSet} />
+                <DupeNotesRow icon="◆" notes={dupe.notes_middle} tier="middle" origNoteSet={origNoteSet} />
+                <DupeNotesRow icon="↓" notes={dupe.notes_base}   tier="base"   origNoteSet={origNoteSet} />
+              </div>
+            )}
+            {hasAccords && (
+              <div className="dupe-accord-pills">
+                {dupe.accords!.map(a => (
+                  <span key={a} className="dupe-accord">{a}</span>
+                ))}
+              </div>
+            )}
           </div>
-          <div className="accord-legend">
-            <span className="accord-legend-item">
-              <span className="legend-dot legend-dot--1"></span> {t.woody}
-            </span>
-            <span className="accord-legend-item">
-              <span className="legend-dot legend-dot--2"></span> {t.floral}
-            </span>
-            <span className="accord-legend-item">
-              <span className="legend-dot legend-dot--3"></span> {t.musky}
-            </span>
-          </div>
-        </div>
+        )}
+
         <div className="match-footer">
           <span className="match-price">{priceStr || '—'}</span>
           {link
@@ -59,5 +77,34 @@ export default function DupeCard({ dupe, index }: Props) {
         </div>
       </div>
     </article>
+  )
+}
+
+function DupeNotesRow({
+  icon, notes, tier, origNoteSet,
+}: {
+  icon: string
+  notes: string[] | null | undefined
+  tier: 'top' | 'middle' | 'base'
+  origNoteSet: Set<string>
+}) {
+  if (!notes?.length) return null
+  return (
+    <div className="dupe-notes-row">
+      <span className="dupe-notes-tier">{icon}</span>
+      <div className="dupe-notes-pills">
+        {notes.map(n => {
+          const shared = origNoteSet.has(n.toLowerCase())
+          return (
+            <span
+              key={n}
+              className={`dupe-note dupe-note--${tier}${shared ? ' dupe-note--shared' : ''}`}
+            >
+              {n}
+            </span>
+          )
+        })}
+      </div>
+    </div>
   )
 }

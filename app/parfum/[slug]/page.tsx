@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { getAllPerfumes, getPerfumeBySlug } from '@/lib/data'
 import { toSlug } from '@/lib/utils'
 import DupeCard from '@/components/DupeCard'
+import PerfumePyramid from '@/components/PerfumePyramid'
 import type { DupeProduct } from '@/lib/types'
 import { t, LOCALE } from '@/lib/i18n'
 
@@ -69,6 +70,12 @@ export default async function PerfumePage(
 
   const count        = dupes.length
   const shopLink     = perfume.price_url || dupes.find(d => d.link)?.link
+
+  const origNoteSet = new Set([
+    ...(perfume.notes_top    ?? []),
+    ...(perfume.notes_middle ?? []),
+    ...(perfume.notes_base   ?? []),
+  ].map(n => n.toLowerCase()))
   const cheapestDupe = dupes.find(d => d.price != null)
   const savings      = perfume.price && cheapestDupe?.price
     ? Math.round((1 - cheapestDupe.price / perfume.price) * 100)
@@ -148,6 +155,12 @@ export default async function PerfumePage(
                     <span className="note-pill">{t.luxe}</span>
                     <span className="note-pill">Signature</span>
                   </div>
+                  <PerfumePyramid
+                    notesTop={perfume.notes_top}
+                    notesMiddle={perfume.notes_middle}
+                    notesBase={perfume.notes_base}
+                    accords={perfume.accords}
+                  />
                   {perfume.price != null && (
                     <div className="original-price">
                       <span className="original-price-amount">
@@ -179,7 +192,7 @@ export default async function PerfumePage(
                 </div>
               ) : (
                 <div className="matches-grid">
-                  {dupes.map((d, i) => <DupeCard key={d.id} dupe={d} index={i} />)}
+                  {dupes.map((d, i) => <DupeCard key={d.id} dupe={d} index={i} origNoteSet={origNoteSet} />)}
                 </div>
               )}
             </section>

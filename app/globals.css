@@ -1572,3 +1572,174 @@ ul   { list-style: none; }
 }
 .prose hr { border: none; border-top: 1px solid var(--outline-variant); margin: 40px 0; }
 .disclaimer-box p { margin: 0; font-style: italic; color: var(--on-surface-variant); }
+
+/* ═══════════════════════════════════════════════════════════
+   Pyramide Olfactive (original card)
+═══════════════════════════════════════════════════════════ */
+.pyramid-section {
+  border-top: 1px solid var(--outline-variant);
+  padding-top: 1.375rem;
+  margin-top: .25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.pyramid-title {
+  font-family: var(--font-sans);
+  font-size: .5625rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--outline);
+}
+.pyramid-layers {
+  display: flex;
+  flex-direction: column;
+  gap: .875rem;
+}
+.pyramid-layer {
+  display: flex;
+  flex-direction: column;
+  gap: .4375rem;
+}
+.pyramid-layer-header {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.pyramid-layer-icon {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .5625rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.pyramid-layer-icon--top    { background: rgba(124,87,21,.12); color: var(--secondary); }
+.pyramid-layer-icon--middle { background: rgba(64,27,27,.10);  color: var(--tertiary); }
+.pyramid-layer-icon--base   { background: rgba(1,45,29,.10);   color: var(--primary); }
+.pyramid-layer-label {
+  font-family: var(--font-sans);
+  font-size: .5625rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--on-surface-variant);
+}
+.pyramid-notes-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .375rem;
+  padding-left: 1.625rem;
+}
+.pyramid-note {
+  font-family: var(--font-sans);
+  font-size: .6875rem;
+  font-weight: 500;
+  padding: .3125rem .75rem;
+  border-radius: var(--r-pill);
+  line-height: 1;
+  white-space: nowrap;
+}
+.pyramid-note--top    { background: rgba(124,87,21,.09); color: var(--secondary); border: 1px solid rgba(124,87,21,.18); }
+.pyramid-note--middle { background: rgba(64,27,27,.07);  color: var(--tertiary);  border: 1px solid rgba(64,27,27,.15); }
+.pyramid-note--base   { background: rgba(1,45,29,.07);   color: var(--primary);   border: 1px solid rgba(1,45,29,.15); }
+.pyramid-accords {
+  border-top: 1px solid var(--outline-variant);
+  padding-top: .875rem;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+.pyramid-accords-label {
+  font-family: var(--font-sans);
+  font-size: .5625rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--outline);
+}
+.pyramid-accord-pills { display: flex; flex-wrap: wrap; gap: .375rem; }
+.pyramid-accord {
+  font-family: var(--font-sans);
+  font-size: .625rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--on-surface-variant);
+  background: var(--surface-container-high);
+  padding: .3125rem .75rem;
+  border-radius: var(--r-pill);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Dupe notes comparison (match card)
+═══════════════════════════════════════════════════════════ */
+.dupe-notes-section {
+  margin: .5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+}
+.dupe-notes-header {
+  display: flex;
+  align-items: center;
+  gap: .625rem;
+  flex-wrap: wrap;
+}
+.dupe-shared-legend {
+  font-size: .5625rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  background: rgba(124,87,21,.10);
+  padding: .1875rem .5rem;
+  border-radius: var(--r-pill);
+}
+.dupe-notes-rows { display: flex; flex-direction: column; gap: .3125rem; }
+.dupe-notes-row  { display: flex; align-items: flex-start; gap: .4375rem; }
+.dupe-notes-tier {
+  font-size: .5625rem;
+  font-weight: 800;
+  color: var(--outline);
+  flex-shrink: 0;
+  width: 14px;
+  padding-top: .25rem;
+  text-align: center;
+}
+.dupe-notes-pills { display: flex; flex-wrap: wrap; gap: .25rem; }
+.dupe-note {
+  font-family: var(--font-sans);
+  font-size: .5625rem;
+  font-weight: 500;
+  padding: .25rem .5625rem;
+  border-radius: var(--r-pill);
+  line-height: 1;
+  white-space: nowrap;
+  background: var(--surface-container);
+  color: var(--on-surface-variant);
+  border: 1px solid transparent;
+}
+.dupe-note--shared {
+  background: rgba(124,87,21,.10);
+  color: var(--secondary);
+  border-color: rgba(124,87,21,.22);
+  font-weight: 700;
+}
+.dupe-accord-pills { display: flex; flex-wrap: wrap; gap: .25rem; margin-top: .125rem; }
+.dupe-accord {
+  font-family: var(--font-sans);
+  font-size: .5625rem;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--on-surface-variant);
+  background: var(--surface-container-high);
+  padding: .25rem .5625rem;
+  border-radius: var(--r-pill);
+}

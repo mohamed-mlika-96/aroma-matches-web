@@ -14,6 +14,10 @@ export interface DupeProduct {
   currency: string | null
   link: string | null
   image_url: string | null
+  notes_top: string[] | null
+  notes_middle: string[] | null
+  notes_base: string[] | null
+  accords: string[] | null
   dupe_brand: DupeBrand | null
 }
 
@@ -29,6 +33,10 @@ export interface PerfumeDetail extends Perfume {
   price: number | null
   price_currency: string | null
   price_url: string | null
+  notes_top: string[] | null
+  notes_middle: string[] | null
+  notes_base: string[] | null
+  accords: string[] | null
   dupe_mapping: Array<{
     dupe_product: DupeProduct | null
   }>

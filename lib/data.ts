@@ -36,10 +36,12 @@ export const getPerfumeBySlug = cache(async (slug: string): Promise<PerfumeDetai
     .from('original_perfume')
     .select(`
       id, name, sex, image_url, price, price_currency, price_url,
+      notes_top, notes_middle, notes_base, accords,
       brand:brand_id(name),
       dupe_mapping(
         dupe_product:dupe_product_id(
           id, name, price, currency, link, image_url,
+          notes_top, notes_middle, notes_base, accords,
           dupe_brand:dupe_brand_id(name, website)
         )
       )
